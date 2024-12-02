@@ -8,9 +8,9 @@
 
 1. Установить зависимости 
 ```shell
-pip install -r requirements.txt
+pip install -e .
 ```
 2. Запустить веб приложение
 ```shell
-python app.py
+flask --app cu_weather_app run --debug
 ```
