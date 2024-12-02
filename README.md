@@ -10,7 +10,11 @@
 ```shell
 pip install -e .
 ```
-2. Запустить веб приложение
+2. Записать API ключ в .env файл по аналогии с .env.example
+```shell
+echo "ACCUWEATHER_API_KEY=myaccuweathertoken" > .env
+```
+3. Запустить веб приложение
 ```shell
 flask --app cu_weather_app run --debug
 ```
