@@ -5,12 +5,14 @@
   <form action="/" method="post">
     <label for="start_city">Начальный город:</label>
     <input type="text" id="start_city" name="start_city" required>
-    <br>
     <label for="end_city">Конечный город:</label>
     <input type="text" id="end_city" name="end_city" required>
-    <br>
     <button type="submit">Проверить погоду</button>
   </form>
+
+  {% if error %}
+    <p class="error">Ошибка: {{ error }}</p>
+  {% endif %}
 
   {% if result %}
     <h2>Результат:</h2>

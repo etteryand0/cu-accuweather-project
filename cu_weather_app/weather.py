@@ -29,22 +29,18 @@ def weather():
     except (ConnectionError, TimeoutError) as e:
         current_app.logger.error(e)
         return render_template(
-            "weather.html", result="Сервис погоды не доступен в данный момент"
+            "weather.html", error="Сервис погоды не доступен в данный момент"
         )
     except requests.exceptions.HTTPError as e:
         current_app.logger.error(e)
         return render_template(
-            "weather.html", result=parse_error_code(e.response.status_code)
+            "weather.html", error=parse_error_code(e.response.status_code)
         )
 
     if not start_location_key:
-        return render_template(
-            "weather.html", result=f"Город {start_location_key} не найден"
-        )
+        return render_template("weather.html", error=f"Город {start_city} не найден")
     if not end_location_key:
-        return render_template(
-            "weather.html", result=f"Город {end_location_key} не найден"
-        )
+        return render_template("weather.html", error=f"Город {end_city} не найден")
 
     current_app.logger.info(f"start location key = '{start_location_key}'")
     current_app.logger.info(f"end location key = '{end_location_key}'")
@@ -57,12 +53,12 @@ def weather():
         end_weather_data = get_weather_data(end_location_key)
     except requests.exceptions.HTTPError as e:
         return render_template(
-            "weather.html", result=parse_error_code(e.response.status_code)
+            "weather.html", error=parse_error_code(e.response.status_code)
         )
 
     if not start_weather_data or not end_weather_data:
         return render_template(
-            "weather.html", result="Не удалось получить данные о погоде"
+            "weather.html", error="Не удалось получить данные о погоде"
         )
 
     start_conditions = parse_weather_conditions(start_weather_data)
