@@ -51,6 +51,11 @@ def weather():
     try:
         start_weather_data = get_weather_data(start_location_key)
         end_weather_data = get_weather_data(end_location_key)
+    except (ConnectionError, TimeoutError) as e:
+        current_app.logger.error(e)
+        return render_template(
+            "weather.html", error="Сервис погоды не доступен в данный момент"
+        )
     except requests.exceptions.HTTPError as e:
         return render_template(
             "weather.html", error=parse_error_code(e.response.status_code)
